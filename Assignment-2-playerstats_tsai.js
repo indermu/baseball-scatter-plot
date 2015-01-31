@@ -1,63 +1,43 @@
-<!doctype html>
 
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+var playerData;
 
-    <title>baseball player stats</title><?php /* EDIT ME */ ?>
+$(document).ready(function() {
+	getData();
+});
 
+function getData() {
+	$.getJSON("js/Assignment 1 baseball player_Tsai.json", function(data,error) {
+		playerData=data;
+		
+		drawStuff();
+	});
+	
+	
+function drawStuff() {
+	
+	var playerName = playerData.name;
+	var playerTeam = playerData.club;
+	var playerStats = playerData.stats;
+	var lastSeasonIndex = playerStats.length -1;
+	
+	var lastSeasonStats = playerData.stats[lastSeasonIndex];
+	var lastSeasonHomeRuns = lastSeasonStats.HR;
+	var lastSeasonYear = lastSeasonStats.year;
+	var lastSeasonTeam = lastSeasonStats.club;
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-
-
-
-    <link rel="stylesheet" href="css/style.css"/>
-
-</head>
-
-<body class="">
-
-    <div id="main-wrapper" class="">
-        <div id="main-content" class="container">
-            <header class="row">
-                <div class="social-links col-md-12"></div>
-                <div class="col-md-12">
-
-                    <h1>I Am a Journalist and Programmer</h1>
-                    <div class="byline">By <a href="#">Your Name Here, Esq.</a></div>
-
-                    <div class="meta">
-                        Published October 18th, 2014
-                    </div>
-                </div>
-            </header>
-
-            <section class="row">
-
-            <div class="col-md-12 chart"></div>
-
-            </section>
-
-            <footer>
-                <div id="source-line">Source: Source goes here.</div>
-            </footer>
-
-        </div>
-    </div>
+$(".chart").append("<h1>"+playerName+"</h1>");
+$(".chart").append("<h3>"+playerTeam+"</h3>");
+$(".chart").append("<p>In "+lastSeasonYear+", "+playerName+" hit "+lastSeasonHomeRuns+" home runs for the "+lastSeasonTeam);
+	
+	console.log (playerData);
+	$(".chart").html(playerData.name);
+	
+	$.each(playerData.stats, function (i, item) {
+		$(".chart").append ("<p>"+item.AVG+"</p>");
+	});
+	
+}
 
 
 
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-
-    <!-- Latest compiled and minified Bootstrap JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
-
-</body>
-</html>
+}
